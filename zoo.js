@@ -68,7 +68,7 @@ class Giraffe extends Animal {
         super (name, "leaves");
     }
     eat(food) {
-        (food == "leaves") ? super.eat("leaves") : console.log("YUCK!!! " + name + " will not eat " + food);
+        (food == "leaves") ? super.eat("leaves") : console.log("YUCK!!! " + this.name + " will not eat " + food);
     }
 }
 
