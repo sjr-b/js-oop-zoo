@@ -1,24 +1,32 @@
-//var favoriteFood = "bacon";
+var animalPopulation = 0;
 
 function run(){
     var tigger = new Tiger("Tigger");
-    tigger.eat("meat");
     var pooh = new Bear("Pooh");
-    pooh.eat("fish");
-    pooh.eat("meat");
     var rarity = new Unicorn("Rarity");
-    rarity.eat("marshmellows");
-    rarity.sleep();
     var gemma = new Giraffe("Gemma");
-    gemma.eat("meat");
-    gemma.eat("leaves");
-    gemma.sleep();
+    var stinger = new Bee("Stinger");
+    var zoebot = new Zookeeper("Zoebot");
+    zoebot.feedAnimals([tigger, pooh, gemma, stinger], "apples");
+}
+
+class Zookeeper {
+    constructor(name) {
+        this.name = name;
+    }
+    feedAnimals(animals, food) {
+        console.log(this.name + " is feeding " + food + " to " + animals.length + " of " + animalPopulation + " animals");
+        for (var a = 0; a < animals.length; a++){
+            animals[a].eat(food);
+        }
+    }
 }
 
 class Animal {
     constructor(name, favoriteFood) {
         this.name = name;
         this.favoriteFood = favoriteFood;
+        animalPopulation++;
     }
     sleep() {
         console.log(this.name + " sleeps for 8 hours");
@@ -27,9 +35,10 @@ class Animal {
         console.log(this.name + " eats " + food);
         (this.favoriteFood == food) ? console.log("YUM!!! " + this.name + " wants more " + food) : this.sleep(this.name);
     }
+    static getPopulation() {
+        return animalPopulation;
+    }
 }
-
-
 
 class Tiger extends Animal {
     constructor(name) {
@@ -54,15 +63,7 @@ class Unicorn extends Animal {
         console.log(this.name + " sleeps in a cloud");
     }
 }
-/*Implement the Giraffe class as a subclass of Animal. Giraffes are vegetarian, so they only eat leaves.
-If you feed "leaves" to a Giraffe, they will happily tell you "YUM!!! <name> wants more leaves" after eating them
-(just like how Tigers respond to "meat") and then sleep.
 
-However, if you feed them anything else, they will shout "YUCK!!! <name> will not eat <food>" to let you know they
-don't like what you fed them. You'll need to override the eat method for the Giraffe class to model this behavior.
-When eating leaves, you can call the superclass's implementation of the eat method - super.eat(‘leaves’) - to avoid
-having to repeat code unnecessarily.
-*/
 class Giraffe extends Animal {
     constructor(name) {
         super (name, "leaves");
@@ -72,59 +73,14 @@ class Giraffe extends Animal {
     }
 }
 
-
-// class Bear {
-//     constructor(name) {
-//         this.name = name;
-//         this.favoriteFood = "fish";
-//     }
-//     sleep() {
-//         console.log(this.name + "hibernates for 4 months");
-//     }
-//     eat(food) {
-//         console.log(this.name + " eats " + food);
-//         (this.favoriteFood == food) ? console.log("YUM!!! " + this.name + " wants more " + food) : this.sleep(this.name);
-//     }
-// }
-
-// function sleep(name){
-//     console.log(name + " sleeps for 8 hours");
-// }
-//
-// function eat(name, food){
-//     console.log(name + " eats " + food);
-//     (favoriteFood == food) ? console.log("YUM!!! " + name + " wants more " + food) : sleep(name);
-//
-// }
-
-
-// class Shape {
-//
-//     constructor(name) {
-//         this.name = name;
-//         this.special = true;
-//     }
-//
-//     sayName() {
-//         console.log('Hi, I am a ', this.name + '.');
-//     }
-//
-//     sayHistory() {
-//         console.log("Shapes have a wonderful history.");
-//     }
-// }
-//
-// class Polygon extends Shape {
-//
-//     constructor(height, width) {
-//         super('Polygon');
-//         this.height = height;
-//         this.width = width;
-//     }
-//
-//     sayHistory() {
-//         console.log('"Polygon" is derived from the Greek polus (many) ' +
-//             'and gonia (angle).');
-//     }
-//
-// }
+class Bee extends Animal {
+    constructor(name) {
+        super (name, "pollen");
+    }
+    eat(food) {
+        (food == "pollen") ? super.eat("pollen") : console.log("YUCK!!! " + this.name + " will not eat " + food);
+    }
+    sleep(){
+        console.log(this.name + " never sleeps");
+    }
+}
